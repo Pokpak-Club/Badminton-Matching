@@ -16,7 +16,7 @@ create table if not exists public.players (
   name text not null unique,
   emoji text default '🏸',
   pin_hash text not null,
-  role text not null default 'player' check (role in ('player', 'admin')),
+  role text not null default 'player' check (role in ('player', 'admin', 'manager')),
   rating integer not null default 1000,
   wins integer not null default 0,
   losses integer not null default 0,
@@ -188,7 +188,7 @@ begin
   from public.sessions s join public.players p on p.id = s.player_id
   where s.token = p_token and s.expires_at > now();
   if v_id is null then raise exception 'ต้อง login ก่อน'; end if;
-  if v_role <> 'admin' then raise exception 'ต้องเป็น admin'; end if;
+  if v_role not in ('admin', 'manager') then raise exception 'ต้องเป็น admin'; end if;
   return v_id;
 end; $$;
 
@@ -279,7 +279,7 @@ create or replace function public.set_role(p_token text, p_player_id uuid, p_rol
 returns void language plpgsql security definer set search_path = public, extensions as $$
 begin
   perform public._require_admin(p_token);
-  if p_role not in ('player', 'admin') then raise exception 'role ไม่ถูกต้อง'; end if;
+  if p_role not in ('player', 'admin', 'manager') then raise exception 'role ไม่ถูกต้อง'; end if;
   update public.players set role = p_role where id = p_player_id;
 end; $$;
 

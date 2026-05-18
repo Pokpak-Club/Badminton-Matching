@@ -28,7 +28,7 @@ export default function App() {
 
   if (!user) return <Login />
 
-  const isAdmin = user.role === 'admin'
+  const isAdmin = user.role === 'admin' || user.role === 'manager'
   const isAdminPath = location.pathname.startsWith('/admin')
 
   // เมนูทั้งหมดสำหรับ sidebar (iPad+)
@@ -57,7 +57,7 @@ export default function App() {
               ป๊อกแป๊ก <span className="text-lime">LEAGUE</span>
             </h1>
             <p className="text-[10px] text-ink-300 mt-1 uppercase tracking-widest">
-              {isAdmin ? '⚡ admin' : 'player'}
+              {user.role === 'admin' ? '⚡ admin' : user.role === 'manager' ? '⚡ manager' : 'player'}
             </p>
           </div>
         </div>
@@ -117,7 +117,7 @@ export default function App() {
                 ป๊อกแป๊ก <span className="text-lime">LEAGUE</span>
               </h1>
               <p className="text-[11px] text-ink-300 mt-1 uppercase tracking-widest">
-                {isAdmin ? '⚡ admin console' : 'player'}
+                {user.role === 'admin' ? '⚡ admin console' : user.role === 'manager' ? '⚡ manager console' : 'player'}
               </p>
             </div>
           </div>

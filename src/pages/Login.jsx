@@ -19,7 +19,7 @@ export default function Login() {
             ป๊อกแป๊ก <span className="text-lime glow-lime">LEAGUE</span>
           </h1>
           <p className="text-sm text-ink-300 mt-2 uppercase tracking-[0.2em]">
-            elo · ranked · realtime
+            ฉันจะเป็นราชาแบดมินตันให้ได้เลย!
           </p>
         </div>
 
