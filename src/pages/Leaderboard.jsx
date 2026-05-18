@@ -20,12 +20,7 @@ export default function Leaderboard() {
     return map
   }, [matches])
 
-  const ranked = useMemo(
-    () => [...players]
-      .filter((p) => p.role !== 'admin')
-      .sort((a, b) => b.rating - a.rating),
-    [players]
-  )
+  const ranked = useMemo(() => [...players].sort((a, b) => b.rating - a.rating), [players])
   const top3 = ranked.slice(0, 3)
   const rest = ranked.slice(3)
 

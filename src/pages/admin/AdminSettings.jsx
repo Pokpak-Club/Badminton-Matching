@@ -80,14 +80,15 @@ function SettingsCard() {
 }
 
 function PlayerManagement() {
-  const { players } = usePlayers()
+  const { players } = usePlayers({ all: true })
   const { user } = useAuth()
   const [overrideOpen, setOverrideOpen] = useState(null)
 
   async function handleToggleRole(p) {
-    const newRole = p.role === 'admin' ? 'player' : 'admin'
-    if (!confirm(`เปลี่ยน "${p.name}" เป็น ${newRole}?`)) return
-    try { await adminApi.setRole(p.id, newRole) } catch (e) { alert(e.message) }
+    const next = p.role === 'player' ? 'admin' : p.role === 'admin' ? 'manager' : 'player'
+    const label = { player: 'ผู้เล่น', admin: 'admin', manager: 'manager (ไม่มีแต้ม)' }
+    if (!confirm(`เปลี่ยน "${p.name}" เป็น ${label[next]}?`)) return
+    try { await adminApi.setRole(p.id, next) } catch (e) { alert(e.message) }
   }
 
   async function handleDelete(p) {
@@ -115,9 +116,10 @@ function PlayerManagement() {
             <div className="font-medium text-sm text-ink-100 flex items-center gap-1.5">
               {p.name}
               {p.role === 'admin' && <span className="text-[9px] px-1.5 py-0.5 rounded bg-lime-soft text-lime uppercase tracking-widest">admin</span>}
+              {p.role === 'manager' && <span className="text-[9px] px-1.5 py-0.5 rounded bg-sky/20 text-sky uppercase tracking-widest">manager</span>}
             </div>
             <div className="text-xs text-ink-300 tnum font-mono mt-0.5">
-              {p.rating} · {p.wins}-{p.losses}
+              {p.role === 'manager' ? 'ไม่มีแต้ม' : `${p.rating} · ${p.wins}-${p.losses}`}
             </div>
           </div>
           <div className="flex gap-1">

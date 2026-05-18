@@ -139,7 +139,7 @@ export default function AdminRecord() {
 
       {picker && (
         <PlayerPicker
-          players={players.filter(p => p.id !== (picker === 1 ? p2Id : p1Id)).filter(p => p.role !== 'admin')}
+          players={players.filter(p => p.id !== (picker === 1 ? p2Id : p1Id))}
           onPick={(p) => { picker === 1 ? setP1Id(p.id) : setP2Id(p.id); setPicker(null) }}
           onClose={() => setPicker(null)}
         />

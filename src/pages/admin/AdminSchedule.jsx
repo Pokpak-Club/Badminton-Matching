@@ -40,8 +40,8 @@ export default function AdminSchedule() {
         {/* Create form */}
         <div className="card-elevated p-4 md:self-start">
           <div className="grid grid-cols-2 gap-3 mb-3">
-            <PickerColumn label="ฝั่งซ้าย" players={players.filter(p => p.id !== p2 && p.role !== 'admin')} selected={p1} onSelect={setP1} />
-            <PickerColumn label="ฝั่งขวา" players={players.filter(p => p.id !== p1 && p.role !== 'admin')} selected={p2} onSelect={setP2} />
+            <PickerColumn label="ฝั่งซ้าย" players={players.filter(p => p.id !== p2)} selected={p1} onSelect={setP1} />
+            <PickerColumn label="ฝั่งขวา" players={players.filter(p => p.id !== p1)} selected={p2} onSelect={setP2} />
           </div>
           <input
             type="text" value={roundLabel} onChange={(e) => setRoundLabel(e.target.value)}
